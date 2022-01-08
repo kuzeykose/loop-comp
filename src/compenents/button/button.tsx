@@ -20,8 +20,8 @@ const InitButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (props,
 
   return (
     <button
-      disabled
-      className={props.traditionalCSS}
+      disabled={props.disable}
+      className={props.traditionalCSS || 'defaultButton'}
       onClick={onClickHandler}
       style={props.style}
     >

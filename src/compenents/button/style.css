@@ -1,10 +1,21 @@
+/* Default Button  */
 .defaultButton {
-  margin: 10px;
-  padding: 8px;
-  background: #fff;
+  min-height: 40px;
+  min-width: 100px;
+  font-family: 'Roboto', sans-serif;
+  margin: 2px;
+  padding: 8px 16px;
+  background: #2f54eb;  
+  border-color: #096dd9;
+  color:white;
   border-width: 1.5px;
-  border-radius: 5px;
-  color: green;
-  font-weight: 700;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 16px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.defaultButton:hover {
+  background: #597ef7;   
 }
