@@ -1,13 +1,12 @@
 import React from 'react';
 
 interface DeafultCardProps {
-  color?: string;
-  title?: string;
-  cover?: string;
-  header?: React.ReactNode;
-  bottom?: React.ReactNode;
-  disable?: boolean;
+  width?: number;
+  height?: number;
+  image?: [string, string, React.CSSProperties?, number?, number?];
+  imageWidth?: number;
   style?: React.CSSProperties;
+  imageStyle?: React.CSSProperties;
   traditionalCSS?: string;
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLElement>;
@@ -15,34 +14,48 @@ interface DeafultCardProps {
 export type CardProps = DeafultCardProps
 
 const InitCard: React.ForwardRefRenderFunction<unknown, CardProps> = (props, ref) => {
+  let {
+    height,
+    width,
+    image,
+    imageWidth,
+    style,
+    traditionalCSS,
+    children
+  } = props
+
+  let imageStyle
+  if (image ) {
+    imageStyle = {
+      objectPosition: `${image[3]} ${image[4]}`,
+      width: `${imageWidth}%`,
+      ...image[2]
+    }
+  }
+
   return (
     <div
-      className={'defaultCard'}
-      style={props.style}
+      style={{
+        ...{
+          height: height,
+          width: width
+        },
+        ...style
+      }}
+      className={traditionalCSS || `defaultCard-${image && image[1]}`}
     >
-      {props.cover &&
-        <img src={props.cover}></img>
-      }
-      {props.title &&
-        <h2 className='card-header-title'>{props.title}</h2>
-      }
-      {props.header &&
-        <div>
-          <div className={`card-header-section`}>
-            {props.header}
-          </div>
-        </div>
-      }
-      <div className='card-body-section'>
-        {props.children}
-      </div>
-      <div className='card-body-bottom'>
-        {/* 
-          Image tag is not working, when <img/> tag comes in props.bottom 
-          .card-body-bottom ignores the .card-body-bottom img padding's
-         */}
-        {props.bottom && props.bottom}
-      </div>
+      {image && ['right', 'bottom'].includes(image[1]) && (
+        <>
+          <div className='card-children'>{children}</div>
+          <img style={imageStyle} src={image[0]} alt='' />
+        </>
+      )}
+      {image && ['top', 'left'].includes(image[1]) && (
+        <>
+          <img style={imageStyle} src={image[0]} alt='' />
+          <div className='card-children'>{children}</div>
+        </>
+      )}
     </div>
   )
 }
